@@ -23,7 +23,7 @@ int main()
     mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_real_distribution<> dis(0.0, 1.0);
 
-    tuple<int, int, float> tuple_t[n * n];
+    tuple<float, int, int> tuple_t[n * n];
 
     int count = 0;
 
@@ -34,9 +34,17 @@ int main()
             // std::cout << dis(gen) << ' ';
             x[i][j] = dis(gen);
             // assign value t
-            tuple_t[count] = make_tuple(i, j, x[i][j]);
-
+            tuple_t[count] = make_tuple(x[i][j], i, j);
+            cout << " (" << get<0>(tuple_t[count]) << ", " << get<1>(tuple_t[count]) << ", " << get<2>(tuple_t[count]) << ") \n";
             count++;
         }
     }
+
+    cout << " la la separator \n";
+    sort(tuple_t, tuple_t + (n * n));
+
+    for (int i = 0; i < n * n; i++)
+    {
+        cout << " (" << get<0>(tuple_t[i]) << ", " << get<1>(tuple_t[i]) << ", " << get<2>(tuple_t[i]) << ") \n";
+        }
 }
