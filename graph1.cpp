@@ -32,10 +32,16 @@ int main()
         for (int j = 0; j < n; j++)
         {
             // std::cout << dis(gen) << ' ';
-            x[i][j] = dis(gen);
-            // assign value t
-            tuple_t[count] = make_tuple(i, j, x[i][j]);
-
+            if (i == j)
+            {
+                continue;
+            }
+            else
+            {
+                x[i][j] = dis(gen);
+                // assign value t
+                tuple_t[count] = make_tuple(i, j, x[i][j]);
+            }
             count++;
         }
     }
