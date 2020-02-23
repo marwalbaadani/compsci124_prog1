@@ -9,11 +9,11 @@
 
 using namespace std;
 
-struct Node
+typedef struct node
 {
     int v;
-    struct Node *next;
-};
+    struct node *next;
+} node;
 
 int main()
 {
@@ -42,8 +42,10 @@ int main()
 
             // std::cout << dis(gen) << ' ';
             float rando = dis(gen);
-
-            x[i][j] = rando;
+            Node vertex;
+            vertex.v = count;
+            vertex.next =
+                x[i][j] = rando;
             x[j][i] = rando;
             tuple_t[count] = make_tuple(x[i][j], i, j);
             cout << " (" << get<0>(tuple_t[count]) << ", " << get<1>(tuple_t[count]) << ", " << get<2>(tuple_t[count]) << ") \n";

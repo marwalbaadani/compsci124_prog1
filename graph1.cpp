@@ -42,6 +42,7 @@ int main()
                 // assign value t
                 tuple_t[count] = make_tuple(i, j, x[i][j]);
             }
+            std::cout < < < < ' ';
             count++;
         }
     }
