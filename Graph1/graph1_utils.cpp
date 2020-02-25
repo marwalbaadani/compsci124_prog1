@@ -10,27 +10,21 @@
 
 using namespace std;
 
-node *find(node *x)
-{
-    if (x != x->parent)
-    {
-        x->parent = find(x->parent);
-    }
-    return x->parent;
-} node;
-
 tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], int n)
 {
     // node *vertices[n];
     //n-1 list
+    cout << "pre-tuple\n";
     tuple<float, node *, node *> *mstEdges[n - 1];
 
+    cout << "pre-sort check\n";
     sort(tuple_t, tuple_t + ((n * (n - 1)) / 2));
 
     int mst = 0;
 
     for (int k = 0; k < (n * (n - 1)) / 2; k++)
     {
+        cout << "k = " << k << "\n";
         // cout << (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k]))) << "\n";
         if (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k])))
         {
@@ -43,6 +37,15 @@ tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], in
     cout << "mst val: " << mst << "\n";
     return *mstEdges;
 }
+
+node *find(node *x)
+{
+    if (x != x->parent)
+    {
+        x->parent = find(x->parent);
+    }
+    return x->parent;
+};
 
 node *link(node *x, node *y)
 {

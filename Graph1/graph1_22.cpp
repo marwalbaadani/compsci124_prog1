@@ -50,7 +50,7 @@ int main()
             count++;
         }
     }
-
+    cout << "pre-kruskal\n";
     kruskal(tuple_t, n);
 }
 
