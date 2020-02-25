@@ -1,3 +1,6 @@
+// We are currently stuck with segementation fault coming from line 61's find(get<1>(tuple_t[k]).
+// We are currently trying to make sure that the correct weight is attached to the tuples
+
 #include <iostream>
 #include <cstdlib>
 #include <random>
@@ -11,8 +14,13 @@ using namespace std;
 
 typedef struct node
 {
-    int rank = 0;
-    node *parent = this;
+    int rank;
+    node *parent;
+    node()
+    {
+        rank = 0;
+        parent = this;
+    }
 } node;
 
 node *find(node *x)
@@ -27,9 +35,14 @@ node *find(node *x)
 node *link(node *x, node *y)
 {
     if (x->rank > y->rank)
+    {
         y->parent = x; //yay
+        return x;
+    }
     if (x->rank == y->rank)
+    {
         y->rank++;
+    }
     x->parent = y;
     return y;
 }
@@ -42,31 +55,27 @@ void unite(node *x, node *y)
 
 tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], int n)
 {
-    node *vertices[n];
+    // node *vertices[n];
     //n-1 list
-    tuple<float, node *, node *> *edges[n - 1];
+    tuple<float, node *, node *> *mstEdges[n - 1];
 
-    sort(tuple_t, tuple_t + (n * n));
-    for (int i = 0; i < (n * (n - 1)) / 2; i++)
-    {
-        cout << " yo(" << get<0>(tuple_t[i]) << ", " << get<1>(tuple_t[i]) << ", " << get<2>(tuple_t[i]) << ") \n";
-    }
+    sort(tuple_t, tuple_t + ((n * (n - 1)) / 2));
+
     int mst = 0;
 
     for (int k = 0; k < (n * (n - 1)) / 2; k++)
     {
-        cout << "hey " << get<1>(tuple_t[k]) << "\n";
+        // cout << (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k]))) << "\n";
         if (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k])))
         {
             // add to edges
-            // edges[mst] = &tuple_t[k];
-            cout << "aye \n";
+            mstEdges[mst] = &tuple_t[k];
             mst++;
-            //unite(get<1>(tuple_t[k]), get<2>(tuple_t[k]));
+            unite(get<1>(tuple_t[k]), get<2>(tuple_t[k]));
         }
     }
     cout << "mst val: " << mst << "\n";
-    return *edges;
+    return *mstEdges;
 }
 
 int main()
@@ -80,26 +89,26 @@ int main()
     // take user input
     cout << "Please enter a number of nodes: ";
     cin >> n;
-    float x[n][n];
 
     node *vertices[n];
-    // create list of tuples representation of graphs
-    tuple<float, node *, node *> tuple_t[(n * (n - 1)) / 2];
-    cout << "come on i see it";
+
     for (int i = 0; i < n; i++)
     {
-        // cout << "open your purse";
         node *p = new node();
         vertices[i] = p;
+        // cout << vertices[i]->parent << "  " << vertices[i]->rank << "\n";
     }
-    // cout << "so I can get a slushie";
+
+    // create list of tuples representation of graphs
+    tuple<float, node *, node *> tuple_t[(n * (n - 1)) / 2];
+
     int count = 0;
     for (int i = 0; i < n; ++i)
     {
         for (int j = i + 1; j < n; ++j)
         {
             float rando = dis(gen);
-            cout << rando << std::endl;
+            // cout << rando << std::endl;
             tuple_t[count] = make_tuple(rando, vertices[i], vertices[j]);
             // cout << "bitch u got a doller";
             // cout << " (" << get<0>(tuple_t[count]) << ", " << (vertices[i]->parent) << ", " << (vertices[j]->parent) << ") \n";
@@ -107,13 +116,7 @@ int main()
         }
     }
 
-    cout << "weewee";
-
-    kruskal(tuple_t, 10);
-    // for (int i = 0; i < 45; i++)
-    // {
-    //     cout << " (" << get<0>(tuple_t2[i]) << ", " << get<1>(tuple_t2[i]) << ", " << get<2>(tuple_t2[i]) << ") \n";
-    // }
+    kruskal(tuple_t, n);
 }
 
 // node vertex;
