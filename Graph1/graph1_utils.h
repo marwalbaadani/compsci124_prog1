@@ -8,7 +8,6 @@
 #include <list>
 #include <string>
 #include <tuple>
-#include <list>
 
 using namespace std;
 
@@ -23,12 +22,12 @@ typedef struct node
     }
 } node;
 
-tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], int n);
+vector<tuple<float, node, node>> kruskal(vector<tuple<float, node, node>> tuple_t, unsigned long long int n);
 
-node *find(node *x);
+node *find(node x);
 
-node *link(node *x, node *y);
+node *link(node x, node y);
 
-void unite(node *x, node *y);
+void unite(node x, node y);
 
 #endif
