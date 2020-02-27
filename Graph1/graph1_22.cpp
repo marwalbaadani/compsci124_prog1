@@ -8,31 +8,34 @@
 #include <tuple>
 #include <list>
 #include <math.h>
+#include <ctime>
 #include "graph1_utils.h"
 
 using namespace std;
 using namespace std::chrono;
 
-int main()
+int main(int argc, char **argv)
 {
-    auto start = high_resolution_clock::now();
+    auto start = steady_clock::now();
 
     // declare variables
-    int n;
+    int flag = atoi(argv[1]);
+    int n = atoi(argv[2]);
+    int numtrials = atoi(argv[3]);
+    int dimension = atoi(argv[4]);
+
     random_device rd;
     mt19937 gen(rd());
     uniform_real_distribution<> dis(0.0, 1.0);
 
     // take user input
-    cout << "Please enter a number of nodes: ";
-    cin >> n;
 
     // create n vertices
     cout << "pre vertice creation \n";
     node *vertices[n];
     for (int i = 0; i < n; i++)
     {
-        node *p = new node();
+        node *p = new node(dimension, dis(gen), dis(gen), dis(gen), dis(gen));
         vertices[i] = p;
     }
     cout << "post vertice creation \n";
@@ -48,13 +51,28 @@ int main()
     {
         for (int j = i + 1; j < n; ++j)
         {
-            float rando = dis(gen);
-            if (n < 10000 || (n >= 10000 && rando < 1/(log(n^2)))){
+            float rando = distance(vertices[i], vertices[j], dimension);
+
+            if (n < 10000)
+            {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-            } else {
+            }
+            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 4))))
+            {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+            }
+            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 3))))
+            {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+            }
+            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 2))))
+            {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+            }
+            else
+            {
                 continue;
             }
-
         }
     }
 
@@ -63,8 +81,8 @@ int main()
     // implement kruskal's algorithm
 
     unsigned long long int edges = tuple_t.size();
-    
-    kruskal(tuple_t, n, edges);
+
+    tuple<float, node *, node *> *mst = kruskal(tuple_t, n, edges);
 
     // clear memory in the heap
     // delete[] tuple_t;
@@ -74,7 +92,16 @@ int main()
         delete vertices[i];
     }
 
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << duration.count() / 1000000 << endl;
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    std::cout << "It took me " << elapsed.count() << " microseconds." << std::endl;
+
+    float average = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        average += get<0>(mst[i]);
+    }
+    average /= (n - 1);
+    cout << "Average edge weight for your " << dimension + 1 << "D graph of " << n << " nodes: " << average
+         << "\n";
 }
