@@ -35,7 +35,19 @@ int main()
     }
 
     // create list of tuples to represent the graph
-    tuple<float, node *, node *> *tuple_t = new tuple<float, node *, node *>[(n * (n - 1)) / 2];
+    // tuple<float, node *, node *> *tuple_t = new tuple<float, node *, node *>[(n * (n - 1)) / 2];
+    vector<float> tuple_t; 
+
+    // int count = 0;
+    // for (int i = 0; i < n; ++i)
+    // {
+    //     for (int j = i + 1; j < n; ++j)
+    //     {
+    //         float rando = dis(gen);
+    //         tuple_t[count] = make_tuple(rando, vertices[i], vertices[j]);
+    //         count++;
+    //     }
+    // }
 
     int count = 0;
     for (int i = 0; i < n; ++i)
@@ -43,7 +55,7 @@ int main()
         for (int j = i + 1; j < n; ++j)
         {
             float rando = dis(gen);
-            tuple_t[count] = make_tuple(rando, vertices[i], vertices[j]);
+            tuple_t[count] = rando;
             count++;
         }
     }
@@ -52,11 +64,11 @@ int main()
     kruskal(tuple_t, n);
 
     // clear memory in the heap
-    delete[] tuple_t;
-    for (int i = 0; i < n; i++)
-    {
-        delete vertices[i];
-    }
+    // delete[] tuple_t;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     delete vertices[i];
+    // }
 
     // auto stop = high_resolution_clock::now();
     // auto duration = duration_cast<microseconds>(stop - start);
