@@ -23,7 +23,7 @@ typedef struct node
     }
 } node;
 
-tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], int n);
+tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple_t, int n);
 
 node *find(node *x);
 

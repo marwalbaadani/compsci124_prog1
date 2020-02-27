@@ -1,11 +1,13 @@
 #include "graph1_utils.h"
 
-tuple<float, node *, node *> *kruskal(tuple<float, node *, node *> tuple_t[], int n)
+tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple_t, int n)
 {
     tuple<float, node *, node *> *mstEdges[n - 1];
 
     // sort our list of tuples
-    sort(tuple_t, tuple_t + ((n * (n - 1)) / 2));
+    
+
+    sort(tuple_t.begin(), tuple_t.end());
 
     int mst = 0;
 

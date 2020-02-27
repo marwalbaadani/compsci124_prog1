@@ -26,7 +26,7 @@ int main()
     cout << "Please enter a number of nodes: ";
     cin >> n;
 
-    // create n vertices 
+    // create n vertices
     node *vertices[n];
     for (int i = 0; i < n; i++)
     {
@@ -35,24 +35,29 @@ int main()
     }
 
     // create list of tuples to represent the graph
-    tuple<float, node *, node *> *tuple_t = new tuple<float, node *, node *>[(n * (n - 1)) / 2];
+    // tuple<float, node *, node *> *tuple_t = new tuple<float, node *, node *>[(n * (n - 1)) / 2];
 
-    int count = 0;
+    vector<tuple<float, node *, node *>> tuple_t;
+
     for (int i = 0; i < n; ++i)
     {
         for (int j = i + 1; j < n; ++j)
         {
             float rando = dis(gen);
-            tuple_t[count] = make_tuple(rando, vertices[i], vertices[j]);
-            count++;
+            if (n > 5000 && rando > (n^(-1/3))){
+            tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+            }
+
         }
     }
 
     // implement kruskal's algorithm
+    
     kruskal(tuple_t, n);
 
     // clear memory in the heap
-    delete[] tuple_t;
+    // delete[] tuple_t;
+    tuple_t.clear();
     for (int i = 0; i < n; i++)
     {
         delete vertices[i];
@@ -60,5 +65,5 @@ int main()
 
     // auto stop = high_resolution_clock::now();
     // auto duration = duration_cast<microseconds>(stop - start);
-    // cout << duration.count() / 1000000 << endl; 
+    // cout << duration.count() / 1000000 << endl;
 }
