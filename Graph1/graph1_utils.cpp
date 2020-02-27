@@ -1,6 +1,6 @@
 #include "graph1_utils.h"
 
-tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple_t, int n)
+tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple_t, int n, unsigned long long int edges)
 {
     tuple<float, node *, node *> *mstEdges[n - 1];
 
@@ -11,7 +11,7 @@ tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple
 
     int mst = 0;
 
-    for (int k = 0; k < (n * (n - 1)) / 2; k++)
+    for (int k = 0; k < edges; k++)
     {
         if (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k])))
         {
