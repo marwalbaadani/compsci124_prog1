@@ -49,7 +49,16 @@ int main()
         for (int j = i + 1; j < n; ++j)
         {
             float rando = dis(gen);
-            if (n < 10000 || (n >= 10000 && rando < 1/(log(n^2)))){
+            if (n < 10000) {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+            } else if (n >= 200000 && rando < 1/(log(n^5)))
+            {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);                
+            } else if (n >= 50000 && rando < 1/(log(n^3)))
+            {
+                tuple_t.emplace_back(rando, vertices[i], vertices[j]);                
+            } else if (n >= 10000 && rando < 1/(log(n^2)))
+            {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             } else {
                 continue;
