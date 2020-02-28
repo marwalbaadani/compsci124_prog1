@@ -57,11 +57,11 @@ int main(int argc, char **argv)
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             }
-            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 4))))
+            else if (n < 200000 || (n >= 10000 && rando < 1 / (log(n ^ 10))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             }
-            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 3))))
+            else if (n < 50000 || (n >= 10000 && rando < 1 / (log(n ^ 3))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             }
