@@ -47,6 +47,8 @@ int main(int argc, char **argv)
     vector<tuple<float, node *, node *>> tuple_t;
 
     cout << "post vector creation \n";
+    int count;
+    count = 0;
     for (int i = 0; i < n; ++i)
     {
         for (int j = i + 1; j < n; ++j)
@@ -55,17 +57,34 @@ int main(int argc, char **argv)
 
             if (n < 10000)
             {
+                if (rando < (1 / (log(n ^ 2))))
+                {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+                continue;
+                }
+                else
+                {
+                    continue;
+                }
             }
-            else if (n < 200000 || (n >= 10000 && rando < 1 / (log(n ^ 10))))
+            else if (n >= 200000)
+            {
+                if (rando < (1 / (log(n ^ 5000))))
+                {
+                    tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+                    cout << count << "\t";
+                    count ++;
+                    continue;
+                } else 
+                {
+                    continue;
+                }
+            }
+            else if (n >= 50000 && rando < (1 / (log(n ^ 3))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             }
-            else if (n < 50000 || (n >= 10000 && rando < 1 / (log(n ^ 3))))
-            {
-                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-            }
-            else if (n < 10000 || (n >= 10000 && rando < 1 / (log(n ^ 2))))
+            else if (n >= 10000 && rando < (1 / (log(n ^ 2))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
             }
