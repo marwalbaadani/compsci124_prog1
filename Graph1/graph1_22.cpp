@@ -55,24 +55,17 @@ int main(int argc, char **argv)
         {
             float rando = distance(vertices[i], vertices[j], dimension);
 
-            if (n < 10000)
+            if (n < 10000) 
             {
-                if (rando < (1 / (log(n ^ 2))))
-                {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
                 continue;
-                }
-                else
-                {
-                    continue;
-                }
             }
             else if (n >= 200000)
             {
-                if (rando < (1 / (log(n ^ 5000))))
+                if (rando < (1 / (log(n ^ 1000))))
                 {
                     tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-                    cout << count << "\t";
+                    // cout << count << "\t";
                     count ++;
                     continue;
                 } else 
@@ -83,15 +76,18 @@ int main(int argc, char **argv)
             else if (n >= 50000 && rando < (1 / (log(n ^ 3))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+                continue;
             }
             else if (n >= 10000 && rando < (1 / (log(n ^ 2))))
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
+                continue;
             }
             else
             {
                 continue;
             }
+
         }
     }
 
@@ -115,7 +111,7 @@ int main(int argc, char **argv)
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "It took me " << elapsed.count() << " microseconds." << std::endl;
 
-    float average = 0;
+    double average = 0;
     for (int i = 0; i < n - 1; i++)
     {
         average += get<0>(mst[i]);
