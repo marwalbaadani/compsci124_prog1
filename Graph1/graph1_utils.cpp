@@ -3,12 +3,12 @@
 #include <math.h>
 #include <iterator>
 #include <random>
+random_device rd;
+mt19937 gen(rd());
+uniform_real_distribution<> dis(0.0, 1.0);
 
 float distance(node *vertex_1, node *vertex_2, int dimension)
 {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dis(0.0, 1.0);
 
     if (dimension == 2) // 2d - unit square
     {
@@ -23,7 +23,10 @@ float distance(node *vertex_1, node *vertex_2, int dimension)
         return (sqrt(pow((vertex_2->x_val - vertex_1->x_val), 2) + pow(vertex_2->y_val - vertex_1->y_val, 2) + pow(vertex_2->z_val - vertex_1->z_val, 2) + pow(vertex_2->w_val - vertex_1->w_val, 2)));
     }
     else
+    {
+
         return dis(gen);
+    }
 }
 
 tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple_t, int n, unsigned long long int edges)
@@ -37,7 +40,7 @@ tuple<float, node *, node *> *kruskal(vector<tuple<float, node *, node *>> tuple
 
     for (int k = 0; k < edges; k++)
     {
-        if (find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k])))
+        if ((find(get<1>(tuple_t[k])) != find(get<2>(tuple_t[k]))))
         {
             // add to edges
             mstEdges[mst] = &tuple_t[k];

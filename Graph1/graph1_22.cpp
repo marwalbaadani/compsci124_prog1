@@ -47,50 +47,20 @@ int main(int argc, char **argv)
     vector<tuple<float, node *, node *>> tuple_t;
 
     cout << "post vector creation \n";
-    int count;
-    count = 0;
+    float bound = (log2(n ^ 2) / sqrt(n));
+
     for (int i = 0; i < n; ++i)
     {
         for (int j = i + 1; j < n; ++j)
         {
             float rando = distance(vertices[i], vertices[j], dimension);
 
-            if (n < 10000) 
+            if (rando < bound)
             {
                 tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-                continue;
             }
-            else if (n >= 200000)
-            {
-                if (rando < (1 / (log(n ^ 1000))))
-                {
-                    tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-                    // cout << count << "\t";
-                    count ++;
-                    continue;
-                } else 
-                {
-                    continue;
-                }
-            }
-            else if (n >= 50000 && rando < (1 / (log(n ^ 3))))
-            {
-                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-                continue;
-            }
-            else if (n >= 10000 && rando < (1 / (log(n ^ 2))))
-            {
-                tuple_t.emplace_back(rando, vertices[i], vertices[j]);
-                continue;
-            }
-            else
-            {
-                continue;
-            }
-
         }
     }
-
     cout << "post vector fill \n";
 
     // implement kruskal's algorithm
@@ -111,12 +81,13 @@ int main(int argc, char **argv)
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "It took me " << elapsed.count() << " microseconds." << std::endl;
 
-    double average = 0;
+    long double average = 0;
     for (int i = 0; i < n - 1; i++)
     {
+        cout << get<0>(mst[i]) << " \n";
         average += get<0>(mst[i]);
     }
-    average /= (n - 1);
+
     cout << "Average edge weight for your " << dimension + 1 << "D graph of " << n << " nodes: " << average
          << "\n";
 }
