@@ -5,7 +5,8 @@ graph1_22.o: graph1_22.cpp
 	g++ -c graph1_22.cpp -std=c++11
 
 graph1_utils.o: graph1_utils.cpp
-	g++ -c graph1_utils.cpp -std=c++11
+	g++ -c graph1_utils.cpp graph1_utils.h -std=c++11
+
 
 clean:
 	rm *.o mst

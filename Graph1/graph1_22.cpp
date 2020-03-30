@@ -9,11 +9,13 @@
 #include <list>
 #include <math.h>
 #include <ctime>
+
+using namespace std;
 #include "graph1_utils.h"
 
 using namespace std;
 using namespace std::chrono;
-
+tuple<float, node *, node *> *mst;
 int main(int argc, char **argv)
 {
     auto start = steady_clock::now();
@@ -31,22 +33,22 @@ int main(int argc, char **argv)
     // take user input
 
     // create n vertices
-    cout << "pre vertice creation \n";
+    // cout << "pre vertice creation \n";
     node *vertices[n];
     for (int i = 0; i < n; i++)
     {
         node *p = new node(dimension, dis(gen), dis(gen), dis(gen), dis(gen));
         vertices[i] = p;
     }
-    cout << "post vertice creation \n";
+    // cout << "post vertice creation \n";
 
     // create list of tuples to represent the graph
     // tuple<float, node *, node *> *tuple_t = new tuple<float, node *, node *>[(n * (n - 1)) / 2];
 
-    cout << "pre vector creation \n";
+    // cout << "pre vector creation \n";
     vector<tuple<float, node *, node *>> tuple_t;
 
-    cout << "post vector creation \n";
+    // cout << "post vector creation \n";
     float bound = (log2(n ^ 2) / sqrt(n));
 
     for (int i = 0; i < n; ++i)
@@ -61,33 +63,22 @@ int main(int argc, char **argv)
             }
         }
     }
-    cout << "post vector fill \n";
+    // cout << "post vector fill \n";
 
     // implement kruskal's algorithm
 
     unsigned long long int edges = tuple_t.size();
 
     tuple<float, node *, node *> *mst = kruskal(tuple_t, n, edges);
-
-    // clear memory in the heap
-    // delete[] tuple_t;
     tuple_t.clear();
     for (int i = 0; i < n; i++)
     {
         delete vertices[i];
     }
-
-    auto end = std::chrono::steady_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "It took me " << elapsed.count() << " microseconds." << std::endl;
-
-    long double average = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        cout << get<0>(mst[i]) << " \n";
-        average += get<0>(mst[i]);
-    }
-
-    cout << "Average edge weight for your " << dimension + 1 << "D graph of " << n << " nodes: " << average
-         << "\n";
+    auto end = chrono::steady_clock::now();
+    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "It took me " << elapsed.count() << " microseconds." << endl;
 }
+
+// clear memory in the heap
+//delete[] tuple_t;
