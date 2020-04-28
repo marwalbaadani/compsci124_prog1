@@ -3,6 +3,9 @@
         "tuple": "cpp",
         "new": "cpp",
         "random": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "ostream": "cpp",
+        "chrono": "cpp",
+        "iostream": "cpp"
     }
 }

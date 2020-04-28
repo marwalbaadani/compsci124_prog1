@@ -70,6 +70,7 @@ int main(int argc, char **argv)
     unsigned long long int edges = tuple_t.size();
 
     tuple<float, node *, node *> *mst = kruskal(tuple_t, n, edges);
+    
     tuple_t.clear();
     for (int i = 0; i < n; i++)
     {
@@ -80,5 +81,3 @@ int main(int argc, char **argv)
     cout << "It took me " << elapsed.count() << " microseconds." << endl;
 }
 
-// clear memory in the heap
-//delete[] tuple_t;
